@@ -9,14 +9,17 @@ body {
     align-items: center;
     height: 100vh;
 }
+
 .container {
     text-align: center;
 }
+
 h1 {
     font-size: 3rem;
     color: #ff5733;
     margin-bottom: 20px;
 }
+
 p {
     font-size: 1.2rem;
     color: #4CAF50;
