@@ -23,7 +23,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           job_name: "build" # input job.<job-id>
-          #job_name: "${{ github.job }}"  # if job.<job-id>.name is not specified, this works too
+          job_name: "${{ github.job }}"  # if job.<job-id>.name is not specified, this works too
           
       - name: Output Current Job Log URL
         run: echo ${{ steps.jobs.outputs.html_url }}
