@@ -29,4 +29,21 @@ jobs:
         env:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve job ID from workflow run, accounting for matrix strategy.
+        id: job_id
+        uses: actions/github-script@main
+        env:
+          matrix: ${{ toJson(matrix) }}
+        with:
+          script: |
+          const { data: workflow_run } = await github.rest.actions.listJobsForWorkflowRun({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: context.runId
+          });
+          const matrix = JSON.parse(process.env.matrix);
+          const job_name = `${context.job}${matrix ? ` (${Object.values(matrix).join(", ")})` : ""}`;
+          return workflow_run.jobs.find((job) => job.name === job_name).id;
+       - name: Print job ID
+        run: echo "${{ steps.job_id.outputs.result }}"
 ...
